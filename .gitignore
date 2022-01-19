@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+pyrightconfig.json
+*.wav
+*.jpg
+set_env.sh
+task.txt
+
