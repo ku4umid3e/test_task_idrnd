@@ -18,7 +18,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-#
+# The bot welcomes user
 @dp.message_handler(commands=['start', 'help'])
 async def send_welcome(message: types.Message):
     """
@@ -27,30 +27,24 @@ async def send_welcome(message: types.Message):
     await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
 
 
-#
+#Bot will save the received photos
 @dp.message_handler(content_types=["photo"])
 async def download_photo(message: types.Message):
     file_name = f"data/{message.from_user.id}/image/img{message.message_id}.jpg"
     await message.photo[-1].download(destination_file=file_name)
+    # If there is no face in the photo, then the bot will remove the photo
     detect_face(file_name)
 
 
-#
+# Bot gets a sound message and saves it
 @dp.message_handler(content_types=["voice"])
 async def download_voice(message: types.Message):    
     file_name = f"data/{message.from_user.id}/voice/audio_message_{message.message_id}.ogg"
     await message.voice.download(destination_file=file_name)
-    #
+    # After converts in 16kHz Vav and removes the original
     convert(file_name, message.message_id, message.from_user.id)
-    
-    
 
-@dp.message_handler(content_types=["audio"])
-async def download_audio(message: types.Message):
-    await message.audio.download(destination_dir="temp_audio/")
-
-
-
+# just echo
 @dp.message_handler()
 async def echo(message: types.Message):
     await message.answer(message.text)
