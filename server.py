@@ -33,7 +33,8 @@ async def download_photo(message: types.Message):
     file_name = f"data/{message.from_user.id}/image/img{message.message_id}.jpg"
     await message.photo[-1].download(destination_file=file_name)
     # If there is no face in the photo, then the bot will remove the photo
-    detect_face(file_name)
+    text = detect_face(file_name)
+    await message.answer(text)
 
 
 # Bot gets a sound message and saves it
@@ -43,6 +44,7 @@ async def download_voice(message: types.Message):
     await message.voice.download(destination_file=file_name)
     # After converts in 16kHz Vav and removes the original
     convert(file_name, message.message_id, message.from_user.id)
+    await message.answer("Wonderful! I seved it.")
 
 # just echo
 @dp.message_handler()
