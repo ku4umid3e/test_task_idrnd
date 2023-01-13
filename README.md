@@ -5,10 +5,8 @@
 
 API_TOKEN — API токен бота.
 
-docker build -t tg_bot ./
+Уствновить зависимости:
+pip install -r requirenments.txt
 
-docker run -d --name tg
-
-Чтобы войти в работающий контейнер: 
-
-docker exec -ti tg bash
+Запустить:
+python server.py
